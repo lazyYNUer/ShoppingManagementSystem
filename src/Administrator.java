@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * @author zcxshuaibi
  * @version 1.0
@@ -50,7 +52,11 @@ public class Administrator implements ProductManage{
 
     //商品管理
     public void showProduct() {}
-    public void addProduct() {}
+    public void addProduct() {
+        MySQL mySQL = new MySQL();
+        mySQL.connect();
+        mySQL.addProduct("1", "watermelon", "HuaQiang", new Date(), "model 3", 1.25, 2.5, 27);
+    }
     public void deleteProduct() {}
     public void alterProduct() {}
     public void searchProduct() {}

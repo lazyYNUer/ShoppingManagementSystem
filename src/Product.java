@@ -9,12 +9,12 @@ import java.util.Date;
  */
 public class Product {
     //属性
-    String productID;
+    String productCode;
     String productName;
-    String producer;
-    Date producedTime;
-    int productType;
-    float purchasePrice; //进价
-    float salePrice; //售价
+    String manufacturer;
+    Date manufacturingDate = new Date();  // 使用 java.util.Date
+    String model;
+    double purchasePrice; //进价
+    double retailPrice; //售价
     int quantity;
 }

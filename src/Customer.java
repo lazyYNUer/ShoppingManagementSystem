@@ -12,11 +12,11 @@ public class Customer implements ProductManage{
     //属性
     String account;
     String password;
-    String ID;
-    String name;
-    int customerLevel;
-    Date registerTime;
-    float totalAmount;
+    String customerID;
+    String customerName;
+    String customerLevel;
+    Date registrationTime = new Date();
+    float totalAmountSpent;
     String phoneNumber;
     String email;
     ArrayList<Product> shoppingCart = new ArrayList<>();

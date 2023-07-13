@@ -8,7 +8,15 @@
 public class Main {
     //主函数
     public static void main(String[] args) {
-
+        MySQL mySQL = new MySQL();
+        mySQL.connect();
+        Administrator administrator = new Administrator();
+        administrator.addProduct();
+        mySQL.showProduct();
+        //mySQL.deleteProduct("1");
+        mySQL.showProduct();
+        mySQL.disconnect();
+        mySQL.showProduct();
     }
 
     //登录菜单
