@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  * @author zcxshuaibi
  * @version 1.0
@@ -9,14 +12,9 @@ public class Main {
     //主函数
     public static void main(String[] args) {
         MySQL mySQL = new MySQL();
-        mySQL.connect();
-        Administrator administrator = new Administrator();
-        administrator.addProduct();
+        mySQL.updateProduct("1", "manufacturingDate", LocalDate.of(2012, 12, 3), "purchasePrice", 3.45);
         mySQL.showProduct();
-        //mySQL.deleteProduct("1");
-        mySQL.showProduct();
-        mySQL.disconnect();
-        mySQL.showProduct();
+        List<Product> productList = mySQL.searchProduct(null, "联想", 1000.0);
     }
 
     //登录菜单

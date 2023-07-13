@@ -10,5 +10,5 @@ public interface ProductManage {
     public void addProduct();
     public void deleteProduct();
     public void searchProduct();
-    public void alterProduct();
+    public void updateProduct();
 }

@@ -10,8 +10,8 @@ import java.util.Date;
 public class Administrator implements ProductManage{
 
     //属性
-    String account;
-    String password;
+    private final String username = "admin";
+    private final String password = "ynuinfo#777";
 
     //方法
     //登录和退出
@@ -51,14 +51,18 @@ public class Administrator implements ProductManage{
     public void searchCustomer() {}
 
     //商品管理
-    public void showProduct() {}
+    public void showProduct() {
+        MySQL mySQL = new MySQL();
+        mySQL.connect();
+        mySQL.showProduct();
+    }
     public void addProduct() {
         MySQL mySQL = new MySQL();
         mySQL.connect();
-        mySQL.addProduct("1", "watermelon", "HuaQiang", new Date(), "model 3", 1.25, 2.5, 27);
+        mySQL.addProduct("P123", "watermelon", "HuaQiang", new Date(), "model 3", 1.25, 2.5, 27);
     }
     public void deleteProduct() {}
-    public void alterProduct() {}
+    public void updateProduct() {}
     public void searchProduct() {}
 
 }
