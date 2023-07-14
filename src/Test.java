@@ -19,11 +19,15 @@ public class Test {
         mySQL.searchProduct("ThinkBook", "Lenovo", 0);
         mySQL.showProduct();
         mySQL.updateAdminPassword("admin", "zcxzcx123");
-        Customer customer = new Customer("3", "kendrick", "lamar", "SILVER", Date.valueOf("2022-5-20"), 350000.34, "911", "Compton");
+        Customer customer = new Customer("3", "陶浩浦", "傻逼", "BROZE", Date.valueOf("2004-8-18"), 0.5, "911", "sb@qq.com");
         mySQL.addCustomer(customer);
         mySQL.showCustomers();
         mySQL.deleteCustomer("2");
         mySQL.searchCustomers(null, "zcx");
         mySQL.searchCustomers("3", null);
+        mySQL.updateCustomer("3", "customerLevel", "GOLDEN", "email", "zcx'son@qq.com");
+        mySQL.showCustomers();
+        Administrator administrator = new Administrator();
+        //administrator.deleteCustomer();
     }
 }

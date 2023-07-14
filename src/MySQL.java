@@ -17,6 +17,24 @@ public class MySQL {
     private final String password = "zcxzcx123";
 
     //方法
+    //Getter方法
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     //连接数据库
     public void connect() {
         try {
@@ -119,7 +137,7 @@ public class MySQL {
     //修改商品信息
     public void updateProduct(String productCode, Object... properties) {
         //调用generateUpdateQuery获取需要用到的SQL语句
-        String query = generateUpdateQuery(properties);
+        String query = generateUpdateQuery("products", "productCode", properties);
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -141,19 +159,26 @@ public class MySQL {
         }
     }
 
+    /**
+     * 根据要修改的属性，自动生成对应的SQL语句
+     * @param tableName
+     * @param identifierColumnName
+     * @param properties
+     * @return 生成的SQL语句
+     */
     //根据需要更新商品信息，自动生成对应的SQL语句
-    private String generateUpdateQuery(Object... properties) {
+    private String generateUpdateQuery(String tableName, String identifierColumnName, Object... properties) {
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append("UPDATE products SET ");
+        queryBuilder.append("UPDATE ").append(tableName).append(" SET ");
 
         for (int i = 0; i < properties.length; i += 2) {
             String propertyName = String.valueOf(properties[i]);
-            Object propertyValue = properties[i + 1];
             queryBuilder.append(propertyName).append(" = ?, ");
         }
 
         queryBuilder.delete(queryBuilder.length() - 2, queryBuilder.length());
-        queryBuilder.append(" WHERE productCode = ?");
+        queryBuilder.append(" WHERE ").append(identifierColumnName).append(" = ?");
+        System.out.println(queryBuilder.toString());
         return queryBuilder.toString();
     }
 
@@ -249,7 +274,10 @@ public class MySQL {
             statement.setString(2, customerID);
 
             int rowsAffected = statement.executeUpdate();
-            System.out.println("重置客户密码成功！");
+            if (rowsAffected <= 0) {
+                System.out.println("未找到对应的客户信息！");
+            }
+            else System.out.println("重置客户密码成功！");
 
             return rowsAffected > 0;
 
@@ -327,7 +355,7 @@ public class MySQL {
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, customerID);
-
+            System.out.println(statement);
             int rowsAffected = statement.executeUpdate();
             if (rowsAffected == 0) {
                 System.out.println("客户ID " + customerID + " 不存在。");
@@ -386,4 +414,28 @@ public class MySQL {
         return results;
     }
 
+    //修改客户信息
+    public void updateCustomer(String customerID, Object... properties) {
+        //调用generateUpdateQuery获取需要用到的SQL语句
+        String query = generateUpdateQuery("customers", "customerID", properties);
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            int index = 1;
+            for (int i = 1; i < properties.length; i += 2) {
+                statement.setObject(index++, properties[i]);
+            }
+            statement.setString(index, customerID);
+
+            System.out.println(statement);
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("客户信息已成功更新！");
+            } else {
+                System.out.println("找不到要更新的商品！");
+            }
+        } catch (SQLException e) {
+            System.out.println("更新客户信息失败: " + e.getMessage());
+        }
+    }
 }
